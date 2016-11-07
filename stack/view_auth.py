@@ -1,4 +1,4 @@
-from stack import app 
+from main import app
 from security import login_required, login_authorized, validate_token, revoke_token
 
 from flask import Flask, redirect, url_for, session
@@ -38,13 +38,14 @@ def signin():
 
 @app.route('/login')
 def login():
+    print REDIRECT_URI,GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET
     callback=url_for(REDIRECT_URI, _external=True)
     return google.authorize(callback=callback)
 
 @app.route('/logout')
 def logout():
     access_token = session.get(KEY_ACCESS_TOKEN)
-    if access_token:      
+    if access_token:
       session.pop(KEY_ACCESS_TOKEN, None)
       revoke_token(access_token[0])
 
@@ -57,9 +58,9 @@ def authorized(resp):
 
     user = validate_token('OAuth %s' % access_token)
     if not VALID_EMAIL_DOMAIN in user['email']:
-      print ('Unauthorized access') 
+      print ('Unauthorized access')
       abort(403)
-    else:  
+    else:
       print ('USER LOGGED: %s' % user['email'])
       session[KEY_ACCESS_TOKEN] = access_token, ''
       return redirect(url_for('index'))

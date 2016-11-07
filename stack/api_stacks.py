@@ -1,6 +1,6 @@
-from stack import app
-from stack.version import __version__
-from stack.security import login_authorized
+from main import app
+from version import __version__
+from security import login_authorized
 
 from flask import jsonify
 from flask import request
@@ -19,7 +19,7 @@ def api_version():
 @login_authorized
 def api_stack(user):
 	r = Database(config)
-	
+
 	return jsonify(r.list_stack())
 
 @app.route('/api/stacks/search', methods = ['GET'])
@@ -58,7 +58,7 @@ def api_team(user, id):
 
 class Database(object):
 	def __init__(self, config):
-		self.es = Elasticsearch([config['elasticsearch']])	
+		self.es = Elasticsearch([config['elasticsearch']])
 
 	def save_document(self, index, document_type, document, id=None):
 		res = self.es.index(index=index, doc_type=document_type, body=document, id=id)
@@ -70,7 +70,7 @@ class Database(object):
 		"""
 		resp = self.es.search(index=index, body=query, size=2500)
 		logger.debug("%d documents found" % resp['hits']['total'])
-		
+
 		return resp
 
 	def search_stack(self, q):
@@ -78,10 +78,10 @@ class Database(object):
 		    "query": {
 		        "query_string": {
 		           "query": q
-		        }        
+		        }
 		    }
 		}
-		logger.debug('query %s' % query) 
+		logger.debug('query %s' % query)
 
 		data = self.search_by_query('stack', query)
 		list_stack = []
@@ -100,7 +100,7 @@ class Database(object):
 			stack['like_count'] = 0
 			list_stack.append(item['_source'])
 
-		return list_stack	
+		return list_stack
 
 	def get_stack(self, id, source):
 		if source:

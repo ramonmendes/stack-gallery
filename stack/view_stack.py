@@ -1,5 +1,5 @@
-from stack import app 
-from stack.security import login_required, get_oauth_token
+from main import app
+from security import login_required, get_oauth_token
 
 from flask import render_template
 
@@ -10,9 +10,9 @@ def after_request(response):
     response.headers["Expires"] = "0"
     response.headers['Cache-Control'] = 'public, max-age=0'
     response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
-    
+
     oauth_token = get_oauth_token()
-    if oauth_token: 
+    if oauth_token:
         response.headers['Authorization'] = oauth_token
     return response
 

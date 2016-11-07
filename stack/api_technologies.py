@@ -1,5 +1,5 @@
-from stack import app
-from stack.security import login_authorized
+from main import app
+from security import login_authorized
 
 import requests
 from flask import jsonify

@@ -1,4 +1,4 @@
-from stack.util import get_environ
+from util import get_environ
 
 from flask import Flask, url_for
 import sys
@@ -17,11 +17,13 @@ app.jinja_env.globals['static'] = (
 ################
 #### config ####
 ################
-app.config.from_json('%s.json' % mode)
+# app.config.from_json('%s.json' % mode)
 
-app.config['GOOGLE_CLIENT_SECRET'] = get_environ(app.config, 'GOOGLE_CLIENT_SECRET')
-app.config['GOOGLE_CLIENT_ID'] = get_environ(app.config, 'GOOGLE_CLIENT_ID')
-app.config['ELASTICSEARCH_URL'] = get_environ(app.config, 'ELASTICSEARCH_URL')
+app.config['GOOGLE_CLIENT_SECRET'] = 'ScQBcaf-4zxLJDcGfuNo4G-7'
+app.config['GOOGLE_CLIENT_ID'] = '596664547229-222pk998h0ihicb6v508av5pkadksisj.apps.googleusercontent.com'
+app.config['ELASTICSEARCH_URL'] = 'http://104.197.92.45:9200'
+app.config['SESSION_TYPE'] = 'memcached'
+app.config['SECRET_KEY'] = 'ScQBcaf-4zxLJDcGfuNo4G-7'
 
 ########################
 #### logging config ####
@@ -32,8 +34,8 @@ if (2, 7) <= sys.version_info < (3, 2):
 	# <https://docs.python.org/2/howto/logging.html#configuring-logging-for-a-library>
 	FORMAT = '%(name)s %(levelname)-5s %(message)s'
 	logging.basicConfig(format=FORMAT)
-	for item in app.config['LOGGER']:
-		logging.getLogger(item['NAME']).setLevel(int(item['LEVELNO']))
+	#for item in app.config['LOGGER']:
+	#	logging.getLogger(item['NAME']).setLevel(int(item['LEVELNO']))
 
 logger = logging.getLogger('stack')
 logger.info('starting app => %s ' % id(app))
@@ -43,13 +45,13 @@ logger.info('starting mode => %s ' % mode)
 ##############
 #### view ####
 ##############
-from stack import view_stack
-from stack import view_auth
+import view_stack
+import view_auth
 
 ##############
 #### APIs ####
 ##############
-from stack import api_stacks
-from stack import api_users
-from stack import api_technologies
-from stack import api_trends
+import api_stacks
+import api_users
+import api_technologies
+import api_trends

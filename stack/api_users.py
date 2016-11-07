@@ -1,5 +1,5 @@
-from stack import app
-from stack.security import login_required, validate_token, login_authorized
+from main import app
+from security import login_required, validate_token, login_authorized
 from flask import jsonify
 from flask import request, session, Response
 
@@ -19,6 +19,5 @@ def api_user_info(user):
 
 @app.route('/api/users/authorized')
 @login_authorized
-def api_user_detail(user):    
+def api_user_detail(user):
     return jsonify(user)
-

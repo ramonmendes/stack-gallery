@@ -1,0 +1,23 @@
+runtime: python27
+api_version: 1
+threadsafe: true
+service: default
+
+handlers:
+- url: /static
+  static_dir: static
+  http_headers:
+    X-Frame-Options: "SAMEORIGIN"
+    X-XSS-Protection: "1; mode=block"
+    X-Content-Type-Options: "nosniff"
+    Content-Security-Policy: "default-src 'self' https://www.googleapis.com https://securetoken.googleapis.com; object-src 'none'; script-src 'self' https://www.google-analytics.com/analytics.js https://apis.google.com/ http://apis.google.com; frame-src 'self' https://content.googleapis.com/ https://www.google.com https://www.youtube.com https://accounts.google.com https://apis.google.com https://plus.google.com https://googl-cit-gcp.firebaseapp.com; child-src 'self' https://www.google.com https://www.youtube.com https://accounts.google.com https://apis.google.com https://plus.google.com; style-src 'self' 'unsafe-inline' http://fonts.googleapis.com/icon http://fonts.googleapis.com https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://themes.googleusercontent.com https://fonts.gstatic.com https://fonts.googleapis.com http://fonts.gstatic.com; img-src 'self' data: https:;"
+    Strict-Transport-Security: "max-age=31536000; includeSubdomains"
+
+- url: /.*
+  script: main.app
+
+libraries:
+- name: webapp2
+  version: latest
+- name: jinja2
+  version: latest
