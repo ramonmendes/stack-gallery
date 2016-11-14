@@ -3,11 +3,14 @@ from util import get_environ
 from flask import Flask, url_for
 import sys
 import logging
-
+from flask_sockets import Sockets
+import requests
 
 mode = sys.argv[1] if len(sys.argv) > 1 else 'development'
 
 app = Flask(__name__)
+
+
 # Function to easily find your assets
 # In your template use <link rel=stylesheet href="{{ static('filename') }}">
 app.jinja_env.globals['static'] = (
@@ -55,3 +58,6 @@ import api_stacks
 import api_users
 import api_technologies
 import api_trends
+
+if __name__ == '__main__':
+    app.run(host='127.0.0.1', port=8080, debug=True)

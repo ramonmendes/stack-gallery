@@ -58,7 +58,7 @@ def api_team(user, id):
 
 class Database(object):
 	def __init__(self, config):
-		self.es = Elasticsearch([config['elasticsearch']])
+		self.es = Elasticsearch(['104.197.92.45:9200'])
 
 	def save_document(self, index, document_type, document, id=None):
 		res = self.es.index(index=index, doc_type=document_type, body=document, id=id)
